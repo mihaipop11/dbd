@@ -1,4 +1,4 @@
-name: dbd clippy
+name: clippy lint
 
 on: [push, pull_request]
 
