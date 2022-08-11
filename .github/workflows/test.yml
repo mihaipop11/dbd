@@ -1,4 +1,4 @@
-name: deb test
+name: dbd test
 
 on:
   push:
@@ -9,7 +9,7 @@ env:
 
 jobs:
   test:
-    name: deb - latest
+    name: dbd - latest
     runs-on: ubuntu-latest
     strategy:
       matrix:

@@ -1,1 +1,1 @@
-# device bridge aka deb
+# device bridge daemon (dbd)

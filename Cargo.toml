@@ -1,5 +1,5 @@
 [package]
-name = "deb"
+name = "dbd"
 version = "0.1.0"
 edition = "2021"
 
