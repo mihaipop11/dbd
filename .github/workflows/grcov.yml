@@ -1,4 +1,4 @@
-name: Grcov
+name: Coverage
 
 on: [push, pull_request]
 
@@ -35,12 +35,27 @@ jobs:
         env:
           CARGO_INCREMENTAL: '0'
           RUSTFLAGS: '-Cinstrument-coverage'
-          LLVM_PROFILE_FILE: 'dbd-%p-%m.profraw'
+          LLVM_PROFILE_FILE: 'grcov-%p-%m.profraw'
       
-      - name: Generate report
-        run: grcov . -s src --binary-path ./target/debug/ -t lcov --branch --ignore-not-existing --ignore "*cargo*" -o ./lcov.info
+      - name: Generate coverage report
+        run: | 
+          grcov $(find . -name "grcov-*.profraw" -print) \
+          --branch \
+          --ignore-not-existing \
+          --binary-path ./target/debug/ \
+          -s . \
+          -t lcov \
+          --ignore "/*" \
+          -o lcov.info
 
       - name: Upload to codecov.io
         uses: codecov/codecov-action@v3
         with:
           file: ./lcov.info
+
+      - name: Upload to coveralls.io 
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ./lcov.info
+          base-path: ${{ github.workspace }}
