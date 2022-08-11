@@ -1,3 +1,7 @@
+trait DReader {}
+
+trait DWriter {}
+
 #[cfg(test)]
 mod tests {
     #[test]
