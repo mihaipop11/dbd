@@ -1,0 +1,46 @@
+name: Grcov
+
+on: [push, pull_request]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  grcov:
+    name: dbd - latest
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: Install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+          components: llvm-tools-preview
+
+      - name: Install grcov
+        uses: actions-rs/install@v0.1
+        with:
+          crate: grcov
+          use-tool-cache: true
+
+      - name: Run coverage
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --all-features --no-fail-fast
+        env:
+          CARGO_INCREMENTAL: '0'
+          RUSTFLAGS: '-Cinstrument-coverage'
+          LLVM_PROFILE_FILE: 'dbd-%p-%m.profraw'
+      
+      - name: Generate report
+        run: grcov . -s src --binary-path ./target/debug/ -t lcov --branch --ignore-not-existing --ignore "*cargo*" -o ./lcov.info
+
+      - name: Upload to codecov.io
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./lcov.info
