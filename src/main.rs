@@ -1,6 +1,6 @@
 use clap::Parser;
-use dbd::bridge::DBridge;
-use dbd::enp_char_dev::CharDevRW;
+use dbd::bridge::dbridge::DBridge;
+use dbd::enp::char_dev::CharDevRW;
 
 #[derive(Parser, Default, Debug)]
 #[clap(version, about)]

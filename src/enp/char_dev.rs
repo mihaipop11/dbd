@@ -1,4 +1,4 @@
-use crate::bridge::{DReader, DWriter};
+use crate::bridge::dbridge::{DReader, DWriter};
 
 #[derive(Debug)]
 pub struct CharDevRW {
