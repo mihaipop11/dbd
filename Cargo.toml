@@ -1,7 +1,13 @@
 [package]
 name = "dbd"
+description = "Device Bridge Daemon (dbd)"
 version = "0.1.0"
 edition = "2021"
+repository = "https://github.com/mihaipop11/dbd"
+
+exclude = [
+    ".github",
+]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
