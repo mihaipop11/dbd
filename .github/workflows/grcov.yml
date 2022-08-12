@@ -48,10 +48,10 @@ jobs:
           --ignore "/*" \
           -o lcov.info
 
-      - name: Upload to codecov.io
-        uses: codecov/codecov-action@v3
-        with:
-          file: ./lcov.info
+      # - name: Upload to codecov.io
+      #   uses: codecov/codecov-action@v3
+      #   with:
+      #     file: ./lcov.info
 
       - name: Upload to coveralls.io 
         uses: coverallsapp/github-action@master
