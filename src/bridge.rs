@@ -1,41 +1,53 @@
-trait DReader {}
+pub trait DReader {}
 
-trait DWriter {}
+pub trait DWriter {}
 
 #[derive(Debug)]
-pub struct DBridge {
-    dev1: String,
-    dev2: String,
+pub struct DBridge<E1, E2>
+where
+    E1: DWriter + DReader,
+    E2: DReader + DWriter,
+{
+    #[allow(dead_code)]
+    enp1: E1,
+
+    #[allow(dead_code)]
+    enp2: E2,
 }
 
-impl DBridge {
-    pub fn new<'a>(dev1: &'a str, dev2: &'a str) -> Result<Self, &'a str> {
-        if dev1 == dev2 {
-            Err("Failed to create bridge, duplicated device name given.")
-        } else {
-            Ok(DBridge {
-                dev1: dev1.to_string(),
-                dev2: dev2.to_string(),
-            })
-        }
+impl<E1, E2> DBridge<E1, E2>
+where
+    E1: DWriter + DReader,
+    E2: DReader + DWriter,
+{
+    pub fn new(enp1: E1, enp2: E2) -> Result<Self, &'static str> {
+        Ok(DBridge {
+            enp1,
+            enp2,
+        })
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::DBridge;
+    use super::{DBridge, DReader, DWriter};
+
+    struct TestEndpointRO {}
+    impl DReader for TestEndpointRO {}
+
+    struct TestEndpointWO {}
+    impl DWriter for TestEndpointWO {}
+
+    struct TestEndpointRW {}
+    impl DWriter for TestEndpointRW {}
+    impl DReader for TestEndpointRW {}
 
     #[test]
-    fn it_works() {
-        assert!(true);
-    }
+    fn bridge_construction() {
+        let endpoint1 = TestEndpointRW {};
+        let endpoint2 = TestEndpointRW {};
 
-    #[test]
-    fn bridge_construction_unique_devices() {
-        let d1 = "device1";
-        let d2 = "device2";
-
-        let bridge = DBridge::new(d1, d2);
+        let bridge = DBridge::new(endpoint1, endpoint2);
         assert!(bridge.is_ok());
     }
 }
