@@ -1,6 +1,5 @@
 use crate::bridge::dbridge::{DReader, DWriter};
 
-#[derive(Debug)]
 pub struct CharDevRW {
     dev_path: String,
 }

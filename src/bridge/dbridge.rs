@@ -2,7 +2,6 @@ pub trait DReader {}
 
 pub trait DWriter {}
 
-#[derive(Debug)]
 pub struct DBridge<E1, E2>
 where
     E1: DWriter + DReader,
