@@ -1,6 +1,7 @@
 use clap::Parser;
+use dbd::bridge::DBridge;
 
-#[derive(Parser,Default,Debug)]
+#[derive(Parser, Default, Debug)]
 #[clap(version, about)]
 /// Device Bridge Daemon (dbd)
 struct Cli {
@@ -19,7 +20,10 @@ struct Cli {
 
 fn main() {
     let args = Cli::parse();
-    println!("{:?}", args);
+    
+    let bridge = DBridge::new(&args.device_a, &args.device_b);
+
+    println!("{:?}", bridge);
 }
 
 #[cfg(test)]
