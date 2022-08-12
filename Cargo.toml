@@ -4,6 +4,7 @@ description = "Device Bridge Daemon (dbd)"
 version = "0.1.0"
 edition = "2021"
 repository = "https://github.com/mihaipop11/dbd"
+license-file = "LICENSE.txt"
 
 exclude = [
     ".github",
