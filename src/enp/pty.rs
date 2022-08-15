@@ -1,11 +1,11 @@
 use crate::bridge::dbridge::{DReader, DWriter};
 
 #[derive(Debug)]
-pub struct FileEndpointRW {
+pub struct Pty {
     dev_path: String,
 }
 
-impl FileEndpointRW {
+impl Pty {
     pub fn new(dev_path: &str) -> Self {
         Self { dev_path: dev_path.to_owned() }
     }
@@ -18,16 +18,16 @@ impl FileEndpointRW {
     }
 }
 
-impl DWriter for FileEndpointRW {}
-impl DReader for FileEndpointRW {}
+impl DWriter for Pty {}
+impl DReader for Pty {}
 
 #[cfg(test)]
 mod tests {
-    use super::FileEndpointRW;
+    use super::Pty;
 
     #[test]
     fn bridge_construction() {
-        let enp = FileEndpointRW::new("/dev/testdev");
+        let enp = Pty::new("/dev/testdev");
         assert!(enp.open());
     }
 }

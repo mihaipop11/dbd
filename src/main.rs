@@ -1,6 +1,6 @@
 use clap::Parser;
 use dbd::bridge::dbridge::DBridge;
-use dbd::enp::char_dev::CharDevRW;
+use dbd::enp::pty::Pty;
 
 #[derive(Parser, Default, Debug)]
 #[clap(version, about)]
@@ -22,8 +22,8 @@ struct Cli {
 fn main() {
     let args = Cli::parse();
 
-    let enp1 = CharDevRW::new(&args.device_a);
-    let enp2 = CharDevRW::new(&args.device_b);
+    let enp1 = Pty::new(&args.device_a);
+    let enp2 = Pty::new(&args.device_b);
 
     let bridge = DBridge::new(enp1, enp2);
 
