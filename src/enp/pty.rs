@@ -1,4 +1,4 @@
-use crate::bridge::dbridge::{DReader, DWriter};
+use std::io::{Write, Read};
 
 #[derive(Debug)]
 pub struct Pty {
@@ -18,8 +18,21 @@ impl Pty {
     }
 }
 
-impl DWriter for Pty {}
-impl DReader for Pty {}
+impl Write for Pty {
+    fn write(&mut self, buf: &[u8]) -> std::io::Result<usize> {
+        Ok(0)
+    }
+
+    fn flush(&mut self) -> std::io::Result<()> {
+        Ok(())
+    }
+}
+
+impl Read for Pty {
+    fn read(&mut self, buf: &mut [u8]) -> std::io::Result<usize> {
+        Ok(0)
+    }
+}
 
 #[cfg(test)]
 mod tests {
